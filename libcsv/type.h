@@ -4,6 +4,9 @@
 /// Copyright 2021 damianzim
 ///
 
+#ifndef LIBCSV_TYPE_H_
+#define LIBCSV_TYPE_H_
+
 #include <ostream>
 #include <sstream>
 #include <string>
@@ -14,7 +17,7 @@ struct Type {
   virtual std::string Stringify() const = 0;
 };
 
-std::ostream& operator<<(std::ostream& os, const Type& type) {
+inline std::ostream& operator<<(std::ostream& os, const Type& type) {
   return os << type.Stringify();
 }
 
@@ -42,3 +45,5 @@ class Float : public Type {
 };
 
 }  // namespace csv::type
+
+#endif  // LIBCSV_TYPE_H_
