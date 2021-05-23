@@ -15,6 +15,7 @@
 #include <utility>
 
 #include "libcsv/stream.h"
+#include "libcsv/type.h"
 
 namespace csv {
 
@@ -52,10 +53,15 @@ class CsvBuilder {
 
   CsvBuilder<Args...>& operator<<(const std::tuple<Args...>& args) {
     assert(out_ != nullptr);
-    std::stringstream row;
-    std::apply([&](auto&&... arg) { ((row << arg << sep_), ...); }, args);
-    row.seekp(-1, std::ios_base::end) << '\n';
-    *out_ << row.str();
+
+    using namespace type;
+    auto cnt = 0;
+    auto last_col = [&]() -> bool { return cnt == Columns(); };
+    std::apply(
+        [&](auto&&... arg) {
+          ((*out_ << arg << (++cnt && last_col() ? '\n' : sep_)), ...);
+        },
+        args);
     return *this;
   }
 
