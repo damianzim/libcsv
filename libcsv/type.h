@@ -7,6 +7,7 @@
 #ifndef LIBCSV_TYPE_H_
 #define LIBCSV_TYPE_H_
 
+#include <optional>
 #include <ostream>
 #include <sstream>
 #include <string>
@@ -43,6 +44,14 @@ class Float : public Type {
  private:
   float value_;
 };
+template <typename T>
+using Opt = std::optional<T>;
+
+template <typename T>
+inline std::ostream& operator<<(std::ostream& os, const Opt<T>& type) {
+  if (type.has_value()) os << *type;
+  return os;
+}
 
 }  // namespace csv::type
 
