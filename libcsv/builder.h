@@ -54,7 +54,7 @@ class CsvBuilder {
   CsvBuilder<Args...>& operator<<(const std::tuple<Args...>& args) {
     assert(out_ != nullptr);
 
-    using namespace type;
+    using ::csv::type::operator<<;
     auto cnt = 0;
     auto last_col = [&]() -> bool { return cnt == Columns(); };
     std::apply(
