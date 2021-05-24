@@ -7,6 +7,9 @@
 #ifndef LIBCSV_BUILDER_H_
 #define LIBCSV_BUILDER_H_
 
+#include <assert.h>
+#include <string.h>
+
 #include <initializer_list>
 #include <ostream>
 #include <sstream>
@@ -44,7 +47,7 @@ class CsvBuilder {
 
     auto header_it = header_.data();
     for (const auto& header : headers) {
-      std::memcpy(static_cast<void*>(header_it), header.data(), header.size());
+      memcpy(static_cast<void*>(header_it), header.data(), header.size());
       *(header_it += header.size()) = sep_;
       ++header_it;
     }
