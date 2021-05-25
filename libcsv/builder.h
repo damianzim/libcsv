@@ -39,9 +39,9 @@ class CsvBuilder {
       return;
     }
     header_.resize([&]() constexpr->size_t {
-      size_t size = 1;  // for \n
+      size_t size = 0;
       for (const auto& header : headers)
-        size += header.size() + 1;  // +1 for separator;
+        size += header.size() + 1;  // +1 for separator or new line character
       return size;
     }());
 
